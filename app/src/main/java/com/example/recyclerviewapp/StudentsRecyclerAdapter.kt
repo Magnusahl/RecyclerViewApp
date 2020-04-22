@@ -1,6 +1,7 @@
 package com.example.recyclerviewapp
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,11 +25,23 @@ class StudentsRecyclerAdapter(private val context: Context, private val students
         val student = students[position]
         holder.textName.text = student.name
         holder.textClassName.text = student.className
+        holder.studentPosition = position
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textName = itemView.findViewById<TextView>(R.id.text_Name)
         val textClassName = itemView.findViewById<TextView>(R.id.text_className)
+        var studentPosition = 0
+
+        init {
+            itemView.setOnClickListener {
+                val intent = Intent(context, AddAndCreateStudentActivity::class.java)
+                intent.putExtra("STUDENT_POSITION", studentPosition)
+                context.startActivity(intent)
+            }
+        }
+
+
     }
 
 }

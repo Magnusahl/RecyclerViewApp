@@ -6,10 +6,14 @@ import android.provider.ContactsContract
 import android.widget.Button
 import android.widget.EditText
 
+const val POSITION_NOT_SET = -1
+const val STUDENT_POSITION_KEY = "STUDENT_POSITION"
+
 class AddAndCreateStudentActivity : AppCompatActivity() {
 
     lateinit var nameTextView: EditText
     lateinit var classTextView: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +24,36 @@ class AddAndCreateStudentActivity : AppCompatActivity() {
 
         val saveButton = findViewById<Button>(R.id.save_button)
 
-        saveButton.setOnClickListener { view ->
-            addNewStudent()
+        var studentPosition = intent.getIntExtra(STUDENT_POSITION_KEY, POSITION_NOT_SET)
+
+        if(studentPosition != POSITION_NOT_SET) {
+            //edit
+            saveButton.setOnClickListener { view ->
+                editStudent(studentPosition)
+            }
+            displayStudent(studentPosition)
+        } else {
+            //add
+            saveButton.setOnClickListener { view ->
+                addNewStudent()
+            }
         }
+
+    }
+
+    fun editStudent(position : Int) {
+
+        DataManager.students[position].name = nameTextView.text.toString()
+        DataManager.students[position].className = classTextView.text.toString()
+        
+        finish()
+    }
+
+    fun displayStudent(position : Int) {
+        val student = DataManager.students[position]
+
+        nameTextView.setText(student.name)
+        classTextView.setText(student.className)
     }
 
     fun addNewStudent() {
