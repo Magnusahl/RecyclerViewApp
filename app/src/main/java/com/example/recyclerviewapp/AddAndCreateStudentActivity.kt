@@ -45,7 +45,7 @@ class AddAndCreateStudentActivity : AppCompatActivity() {
 
         DataManager.students[position].name = nameTextView.text.toString()
         DataManager.students[position].className = classTextView.text.toString()
-        
+
         finish()
     }
 
