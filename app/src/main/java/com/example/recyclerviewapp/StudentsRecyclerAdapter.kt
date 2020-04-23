@@ -1,12 +1,16 @@
 package com.example.recyclerviewapp
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.student_list_view.view.*
 
 class StudentsRecyclerAdapter(private val context: Context, private val students: List<Student>) :
@@ -28,9 +32,15 @@ class StudentsRecyclerAdapter(private val context: Context, private val students
         holder.studentPosition = position
     }
 
+    fun removeStudent(position: Int) {
+        DataManager.students.removeAt(position)
+        notifyDataSetChanged()
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textName = itemView.findViewById<TextView>(R.id.text_Name)
         val textClassName = itemView.findViewById<TextView>(R.id.text_className)
+        val deleteButton = itemView.findViewById<ImageButton>(R.id.delete_button)
         var studentPosition = 0
 
         init {
@@ -39,9 +49,25 @@ class StudentsRecyclerAdapter(private val context: Context, private val students
                 intent.putExtra("STUDENT_POSITION", studentPosition)
                 context.startActivity(intent)
             }
+            deleteButton.setOnClickListener {view ->
+                val dialogBuilder = AlertDialog.Builder(context)
+
+                dialogBuilder.setTitle("Remove Student?")
+                    .setMessage("Do you want to remove this Student?")
+                    .setPositiveButton("Remove", DialogInterface.OnClickListener {
+                       dialog, id ->
+                        Snackbar.make(view, "Student removed", Snackbar.LENGTH_LONG).show()
+                        removeStudent(studentPosition) 
+                    })
+                    .setNegativeButton("Cancel", DialogInterface.OnClickListener {
+                        dialog, id -> dialog.cancel()
+                    })
+
+                val alert = dialogBuilder.create()
+                
+                alert.show()
+            }
         }
-
-
     }
 
 }
