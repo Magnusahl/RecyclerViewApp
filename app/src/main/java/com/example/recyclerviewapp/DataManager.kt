@@ -9,22 +9,22 @@ object DataManager {
 
     fun createMockData() {
 
-        var student = Student("Alessio", "MAP19")
+        var student = Student("Alessio", "MAP19", done = false)
         students.add(student)
 
-        student = Student("Andreas", "MAP19")
+        student = Student("Andreas", "MAP19", done = false)
         students.add(student)
 
-        student = Student("Jansson", "MAP19")
+        student = Student("Jansson", "MAP19", done = false)
         students.add(student)
 
-        student = Student("Lovisa", "MAP19")
+        student = Student("Lovisa", "MAP19", done = false)
         students.add(student)
 
-        student = Student("Magnus", "MAP19")
+        student = Student("Magnus", "MAP19", done = false)
         students.add(student)
 
-        student = Student("Jakob", "MAP19")
+        student = Student("Jakob", "MAP19", done = false)
         students.add(student)
     }
 

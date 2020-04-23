@@ -60,7 +60,7 @@ class AddAndCreateStudentActivity : AppCompatActivity() {
         val name = nameTextView.text.toString()
         val className = classTextView.text.toString()
 
-        val student = Student(name,className)
+        val student = Student(name,className, done = false)
         DataManager.students.add(student)
         finish()
     }
